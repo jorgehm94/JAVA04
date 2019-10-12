@@ -1,3 +1,5 @@
+package Controlador;
+
     //Este archivo contiene la configuracion de la conexion por ODBC de la BD, donde se 
     //Cargan todos los drives necesarios y archivos que permiten realizar las operaciones
     //con las tablas de la BD
