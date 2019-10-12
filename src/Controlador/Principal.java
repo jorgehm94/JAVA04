@@ -20,8 +20,7 @@ public class Principal {
             
           
     }
-    
-    private  static VentanaPrincipal devolverVentana()
+    public  static VentanaPrincipal devolverVentana()
     {
         return prog;
     }

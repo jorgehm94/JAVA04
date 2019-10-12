@@ -1,6 +1,12 @@
 
 package Vista;
 
+import Controlador.Conexion;
+import Controlador.Principal;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Jorge Herrera
@@ -10,28 +16,119 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     public VentanaPrincipal() {
         initComponents();
+        
+        visualizar.setEnabled(false);
+        acerca.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menu = new javax.swing.JMenu();
+        conexion = new javax.swing.JMenuItem();
+        visualizar = new javax.swing.JMenuItem();
+        acerca = new javax.swing.JMenuItem();
+
+        jMenu2.setText("File");
+        jMenuBar2.add(jMenu2);
+
+        jMenu3.setText("Edit");
+        jMenuBar2.add(jMenu3);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        menu.setText("Menu");
+        menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuActionPerformed(evt);
+            }
+        });
+
+        conexion.setText("Conexion");
+        conexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                conexionActionPerformed(evt);
+            }
+        });
+        menu.add(conexion);
+
+        visualizar.setText("Visualizar datos");
+        menu.add(visualizar);
+
+        acerca.setText("Acerda de");
+        acerca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acercaActionPerformed(evt);
+            }
+        });
+        menu.add(acerca);
+
+        jMenuBar1.add(menu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 528, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 302, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    private void acercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaActionPerformed
+            AcercaDe a = new AcercaDe(this, true);
+            a.setTitle("Version: 0.9.9");
+            a.setVisible(true);
+    }//GEN-LAST:event_acercaActionPerformed
+
+    private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
+        
+    }//GEN-LAST:event_menuActionPerformed
+
+    private void conexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conexionActionPerformed
+            
+            String pass;
+            
+            pedirContraseña p1 = new pedirContraseña(this, true);
+            p1.setTitle("Verificacion");
+            p1.setVisible(true);
+            
+    }//GEN-LAST:event_conexionActionPerformed
+
+    // Metodo que llamo en la conexion para activar los otros menus si la conexion sale bien
+    public void activarMenu()
+    {
+             acerca.setEnabled(true);
+             visualizar.setEnabled(true);
+    }
+    // Metodo que llamo en la conexion para desactivar los otros menus si la conexion sale mal
+    public void desactivarMenu()
+    {
+             acerca.setEnabled(false);
+             visualizar.setEnabled(false);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem acerca;
+    private javax.swing.JMenuItem conexion;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenu menu;
+    private javax.swing.JMenuItem visualizar;
     // End of variables declaration//GEN-END:variables
 }
