@@ -4,6 +4,7 @@ package Controlador;
 
 import Vista.VentanaPrincipal;
 import java.io.IOException;
+import javax.swing.JPanel;
 
 
 public class Principal {
@@ -23,6 +24,12 @@ public class Principal {
     public  static VentanaPrincipal devolverVentana()
     {
         return prog;
+    }
+    
+    public static void cambioDePanel (JPanel a)
+    {
+         prog.setContentPane(a);
+         prog.pack();
     }
     
 }

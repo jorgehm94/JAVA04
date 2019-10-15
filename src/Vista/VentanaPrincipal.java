@@ -58,6 +58,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         menu.add(conexion);
 
         visualizar.setText("Visualizar datos");
+        visualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                visualizarActionPerformed(evt);
+            }
+        });
         menu.add(visualizar);
 
         acerca.setText("Acerda de");
@@ -107,6 +112,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             p1.setVisible(true);
             
     }//GEN-LAST:event_conexionActionPerformed
+
+    //Visualizar los directores
+    private void visualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizarActionPerformed
+        
+        VisualizarDirector objeto = new VisualizarDirector();
+        
+        this.setContentPane(objeto);
+        this.pack();
+    }//GEN-LAST:event_visualizarActionPerformed
 
     // Metodo que llamo en la conexion para activar los otros menus si la conexion sale bien
     public void activarMenu()
