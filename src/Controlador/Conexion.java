@@ -22,8 +22,10 @@ public class Conexion {
         //Objeto Tipo conexion que contiene todos los parametros para interactuar 
         //con la BD se crea un objeto tipo con
     public static Connection con;
-        //Constructor de la clase Conexion que contiene el parametro nombre que determina
-        //el nombre de la base de datos que se va ha conectar con el ODBC
+    
+    public static Statement director;
+    public static Statement supermercado;
+    
    
     public static boolean crearConexion(String pass)
     {
@@ -43,7 +45,7 @@ public class Conexion {
             {
                     //url es un texto que contiene la ruta del nombre o la direccion
                     //de conexon de la base da Datos conectada al JDBC
-                    String url = "jdbc:postgresql://192.168.137.130:5432/SUPERMERCADO";
+                    String url = "jdbc:postgresql://192.168.8.12:5432/SUPERMERCADO";
 
                     //Con es el objeto creado para la coneccion donde se especifican los
                     //parametros de la ubicacion de la BD, login si la base de datos
@@ -53,6 +55,9 @@ public class Conexion {
                     con = DriverManager.getConnection(url, "postgres", pass);
                     
                     JOptionPane.showMessageDialog(null, "Conexion exitosa" ,"Ahora estas Doramio", JOptionPane.PLAIN_MESSAGE);
+                    
+                    director = con.createStatement();
+                    supermercado = con.createStatement();
                     return true;
 
             }
@@ -70,15 +75,17 @@ public class Conexion {
 
 
     
-    public static Statement crearSentencia() throws SQLException
+    public static Statement crearSentenciaDirector() throws SQLException
     {
-        return con.createStatement();
+        return director;
     }
-    public static ResultSet consulta(String consulta) throws SQLException
+    
+    
+    public static Statement crearSentenciaSupermercado() throws SQLException
     {
-        return crearSentencia().executeQuery(consulta);
+        return supermercado;
     }
-
+   
     public static void cerrarConexion()
     {
         try
