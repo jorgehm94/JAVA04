@@ -15,9 +15,11 @@ import java.sql.SQLException;
 public class GestionSupermercado {
     
     
-    public static ResultSet consulta(String consulta) throws SQLException
+    public ResultSet consulta(String consulta) throws SQLException
     {
-        return Conexion.supermercado.executeQuery(consulta);
+        Conexion con = new Conexion();
+          
+        return con.crearSentenciaDirector().executeQuery(consulta);
     }
 
     

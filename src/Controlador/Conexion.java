@@ -6,9 +6,7 @@ package Controlador;
 
     //Paquete con las funcion que pemite configurar la conexion de la BD y tiene definido 
     //los controladores necesarios para las conexiones de la BD //Connection - ResultSet(consulta selet) - Statement(ejecutar consultas insert, update, delete) - SQException (Excepciones en SQL)
-import Vista.VentanaPrincipal;
-import Vista.pedirContraseña;
-    import java.sql.*; 
+import java.sql.*; 
 import javax.swing.JOptionPane;
 
     //paquete que permite configurar las funciones de red
@@ -23,8 +21,8 @@ public class Conexion {
         //con la BD se crea un objeto tipo con
     public static Connection con;
     
-    public static Statement director;
-    public static Statement supermercado;
+    public  Statement director;
+    public  Statement supermercado;
     
    
     public static boolean crearConexion(String pass)
@@ -45,7 +43,7 @@ public class Conexion {
             {
                     //url es un texto que contiene la ruta del nombre o la direccion
                     //de conexon de la base da Datos conectada al JDBC
-                    String url = "jdbc:postgresql://192.168.8.12:5432/SUPERMERCADO";
+                    String url = "jdbc:postgresql://192.168.214.128:5432/SUPERMERCADO";
 
                     //Con es el objeto creado para la coneccion donde se especifican los
                     //parametros de la ubicacion de la BD, login si la base de datos
@@ -56,8 +54,7 @@ public class Conexion {
                     
                     JOptionPane.showMessageDialog(null, "Conexion exitosa" ,"Ahora estas Doramio", JOptionPane.PLAIN_MESSAGE);
                     
-                    director = con.createStatement();
-                    supermercado = con.createStatement();
+                    
                     return true;
 
             }
@@ -75,14 +72,18 @@ public class Conexion {
 
 
     
-    public static Statement crearSentenciaDirector() throws SQLException
+    public  Statement crearSentenciaDirector() throws SQLException
     {
+        director = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                   
         return director;
     }
     
     
-    public static Statement crearSentenciaSupermercado() throws SQLException
-    {
+    public Statement crearSentenciaSupermercado() throws SQLException
+    { 
+        supermercado = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        
         return supermercado;
     }
    
