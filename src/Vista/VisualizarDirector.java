@@ -2,32 +2,33 @@
 package Vista;
 
 import Controlador.GestionDirector;
+import Controlador.Principal;
 import java.sql.*; 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class VisualizarDirector extends javax.swing.JPanel {
     
         GestionDirector con =new GestionDirector();
         
-        ResultSet directores ;
         
     public VisualizarDirector() {
         initComponents();
         try {
            
-        
-            directores = con.consulta("select * from DIRECTOR;");
+            con.consulta("select * from DIRECTOR;");
             
-            directores.next();
+            con.primero();
             
-            if(directores.isFirst())
+            if(con.isFirst())
                 botonAtras.setEnabled(false);
             
-            if(directores.isLast())
+            if(con.isLast())
                 botonAdelante.setEnabled(false);
             
-            jTextField1.setText(""+directores.getString(1));
-            jTextField2.setText(""+directores.getString(2));
+            actualizarDatos();
              
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Ha fallado esa consulta", "Error", JOptionPane.ERROR_MESSAGE);
@@ -49,8 +50,6 @@ public class VisualizarDirector extends javax.swing.JPanel {
         botonAtras = new javax.swing.JButton();
         botonAdelante = new javax.swing.JButton();
         botonCalcular = new javax.swing.JButton();
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/AT-cm_298474580-preview.jpg"))); // NOI18N
 
         botonProductos.setText("PRODUCTOS");
         botonProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -128,7 +127,7 @@ public class VisualizarDirector extends javax.swing.JPanel {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botonAtras)
                             .addComponent(botonAdelante))
@@ -142,23 +141,34 @@ public class VisualizarDirector extends javax.swing.JPanel {
 
     private void botonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonProductosActionPerformed
         
-        VisualizarAcciones objeto = new VisualizarAcciones();
+        Acciones objeto;
         
-        Controlador.Principal.cambioDePanel(objeto);
+            try {
+                objeto = new Acciones(Principal.devolverVentana(),true, Integer.parseInt(con.devolverColumna(1)));
+                
+                objeto.setVisible(true);
+                objeto.pack();
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(VisualizarDirector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        
     }//GEN-LAST:event_botonProductosActionPerformed
 
     private void botonAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAdelanteActionPerformed
 
         try {
-            directores.next();
+            con.avanzar();
             
-            if (directores.isLast() == false) {
+            if (con.isLast() == false) {
                 botonAdelante.setEnabled(true);
             } else {
                 botonAdelante.setEnabled(false);
             }
             
-            if (directores.isFirst()== false) {
+            if (con.isFirst()== false) {
                 botonAtras.setEnabled(true);
             } else {
                 botonAtras.setEnabled(false);
@@ -171,15 +181,15 @@ public class VisualizarDirector extends javax.swing.JPanel {
 
     private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
         try {
-            directores.previous();
+            con.retroceder();
             
-            if (directores.isLast() == false) {
+            if (con.isLast() == false) {
                 botonAdelante.setEnabled(true);
             } else {
                 botonAdelante.setEnabled(false);
             }
             
-            if (directores.isFirst()== false) {
+            if (con.isFirst()== false) {
                 botonAtras.setEnabled(true);
             } else {
                 botonAtras.setEnabled(false);
@@ -195,12 +205,18 @@ public class VisualizarDirector extends javax.swing.JPanel {
     {
         try {
             
-            jTextField1.setText("" + directores.getString(1));
-            jTextField2.setText("" + directores.getString(2));
+            jTextField1.setText("" + con.devolverColumna(1));
+            jTextField2.setText("" + con.devolverColumna(2));
+            
+            jLabel2.setIcon(new ImageIcon(getClass().getResource("/Imagenes/"+con.devolverColumna(1)+".jpg")));
             
         } catch (SQLException sQLException) {
         }
     }
+    
+    
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonAdelante;
