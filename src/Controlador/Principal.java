@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 public class Principal {
 
-    private static VentanaPrincipal prog = new VentanaPrincipal();
+    private static VentanaPrincipal prog = new VentanaPrincipal();//Objeto de VentanaPrincipal
 
     public static void main(String[] args) throws ClassNotFoundException, IOException {
         
@@ -21,11 +21,13 @@ public class Principal {
             
           
     }
+    //Metodo para devolver el objeto creado anteriormente
     public  static VentanaPrincipal devolverVentana()
     {
         return prog;
     }
     
+    //Metodo para cambio de panel
     public static void cambioDePanel (JPanel a)
     {
          prog.setContentPane(a);

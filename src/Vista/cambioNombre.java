@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class cambioNombre extends javax.swing.JDialog {
 
     private int codDir;
-    public cambioNombre(java.awt.Frame parent, boolean modal, int cod) {
+    public cambioNombre(java.awt.Frame parent, boolean modal, int cod) { //Se le pasa el codigo de director
         super(parent, modal);
         initComponents();
         codDir=cod;
@@ -75,19 +75,19 @@ public class cambioNombre extends javax.swing.JDialog {
 
     private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
         
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER) //Se cerrara y guardara el campo modificado cuando se pulse "ENTER"
         {
             String nuevoNombre = jTextField2.getText();
             
-            GestionDirector doramio = new GestionDirector();
+            GestionDirector doramio = new GestionDirector(); //Creamos objeto de la clase Gestion director
             try {
-                doramio.modificar("update DIRECTOR set NOMBRE=\'"+nuevoNombre+"\' where COD_DIR="+codDir+";");
+                doramio.modificar("update DIRECTOR set NOMBRE=\'"+nuevoNombre+"\' where COD_DIR="+codDir+";"); //Consulta para modificar
                 
             } catch (SQLException ex) {
                 Logger.getLogger(cambioNombre.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            dispose();
+            dispose(); //Cerramos ventana
         }
         
     }//GEN-LAST:event_jTextField2KeyPressed

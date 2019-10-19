@@ -93,16 +93,17 @@ public class pedirContraseña extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActionPerformed
-        boolean con = Conexion.crearConexion(jPasswordField1.getText());
+        boolean con = Conexion.crearConexion(jPasswordField1.getText()); //Se introduce la contraseña
         
-            if(con == true)
+            if(con == true) //Si es correcta activa el menu
                 Principal.devolverVentana().activarMenu();
-            else
+            else //Si no se desactiva el boton
                 Principal.devolverVentana().desactivarMenu();
             
-        dispose();
+        dispose(); //Se cierra la ventana
     }//GEN-LAST:event_aceptarActionPerformed
 
+    //Si se pulsa cancelar se cierra la ventana
     private void cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActionPerformed
         dispose();
     }//GEN-LAST:event_cancelarActionPerformed

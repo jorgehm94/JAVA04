@@ -93,9 +93,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    
+    //Se llama a JDialog que muestra informacion acerca de la version
     private void acercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acercaActionPerformed
-            AcercaDe a = new AcercaDe(this, true);
+            AcercaDe a = new AcercaDe(this, true); //Se sobre pone a este JFrame, y hasta que no se cierre el JDialog no se puede hacer nada
             a.setTitle("Version: 0.9.9");
             a.setVisible(true);
     }//GEN-LAST:event_acercaActionPerformed
@@ -103,12 +103,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuActionPerformed
         
     }//GEN-LAST:event_menuActionPerformed
-
+    
+    //Se llama a JDialog que pide contraseña
     private void conexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conexionActionPerformed
             
             String pass;
             
-            pedirContraseña p1 = new pedirContraseña(this, true);
+            pedirContraseña p1 = new pedirContraseña(this, true); //Se sobre pone a este JFrame, y hasta que no se cierre el JDialog no se puede hacer nada
             p1.setTitle("Verificacion");
             p1.setVisible(true);
             

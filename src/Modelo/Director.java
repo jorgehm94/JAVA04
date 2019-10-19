@@ -1,7 +1,10 @@
 
 package Modelo;
 
-
+/**
+ *
+ * @author Jorge Herrera - Sergio Ruiz
+ */
 public class Director {
     
     private int cod;

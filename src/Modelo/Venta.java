@@ -6,7 +6,7 @@ import java.util.GregorianCalendar;
 
 /**
  *
- * @author Jorge Herrera
+ * @author Jorge Herrera - Sergio Ruiz
  */
 public class Venta extends Supermercado{
     

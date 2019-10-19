@@ -19,13 +19,13 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author alumno
+ * @author Jorge Herrera - Sergio Ruiz
  */
 public class NuevaActividad extends javax.swing.JDialog {
 
     private int directorActual;
     
-    public NuevaActividad(java.awt.Frame parent, boolean modal, int cod) {
+    public NuevaActividad(java.awt.Frame parent, boolean modal, int cod) { //Se le pasa el codigo de Director
         super(parent, modal);
         initComponents();
         
@@ -37,11 +37,12 @@ public class NuevaActividad extends javax.swing.JDialog {
         
         directorActual = cod;
         
-        desactivarCampos();
+        desactivarCampos(); //Inicialmente los campos de texto estan desactivados
         
     }
 
     
+    //Metodo para activar los campos
     public void activarCampos()
     {
         jTextField1.setVisible(true);
@@ -56,6 +57,7 @@ public class NuevaActividad extends javax.swing.JDialog {
         
     }
     
+    //Metodo para desactivar los campos
     public void desactivarCampos()
     {
         jTextField1.setVisible(false);
@@ -194,6 +196,7 @@ public class NuevaActividad extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Metodo para el checkbox de venta
     private void ventaCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ventaCheckActionPerformed
         
         if(ventaCheck.isSelected())
@@ -212,7 +215,7 @@ public class NuevaActividad extends javax.swing.JDialog {
             desactivarCampos();
         }
     }//GEN-LAST:event_ventaCheckActionPerformed
-
+    //Metodo para el checkbox de reposicion
     private void repoCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repoCheckActionPerformed
         if(repoCheck.isSelected())
         {
@@ -231,40 +234,44 @@ public class NuevaActividad extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_repoCheckActionPerformed
 
+    //Si se pulsa el boton de aceptar
     private void aceptarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarActividadActionPerformed
         
-        GestionSupermercado obj = new GestionSupermercado();
+        GestionSupermercado obj = new GestionSupermercado(); //Nuevo objeto de la clase Gestion Supermercado
         
-        String codSuper = jTextField1.getText();
+        //Se recoge el codigo y la cantidad
+        String codSuper = jTextField1.getText(); 
         String numero = jTextField2.getText();
         
+        //Se recoge la fecha
         String f = ""+jDatePicker1.getModel().getYear()+"/"+jDatePicker1.getModel().getMonth()+"/"+jDatePicker1.getModel().getDay();
         
         
         try {
             
-            obj.inserccion("insert into SUPERMERCADO values(" + codSuper + "," + directorActual + ",\'" + f + "\');");
+            obj.inserccion("insert into SUPERMERCADO values(" + codSuper + "," + directorActual + ",\'" + f + "\');"); //Se hace una insercion de lo introducido
             
-            if (ventaCheck.isSelected()) {
+            if (ventaCheck.isSelected()) { //Si el checkbox que se ha marcado es el de ventas se introduce datos en esa tabla
                 obj.inserccion("insert into VENTA values(" + codSuper + "," + numero + ");");
             } else {
-                if (repoCheck.isSelected()) {
+                if (repoCheck.isSelected()) { //Si el checkbox que se ha marcado es el de reposicion se introduce datos en esa tabla
                     obj.inserccion("insert into REPOSICION values(" + codSuper + "," + numero + ");");
                 }
             }
             
-            JOptionPane.showMessageDialog(null, "Has añadido una nueva actividad", "Ahroa estas doramio", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Has añadido una nueva actividad", "Nueva actividad", JOptionPane.INFORMATION_MESSAGE);
             
         } catch (SQLException ex) {
             
-             JOptionPane.showMessageDialog(null, "Esa actividad ya existe", "Bye bye", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(null, "Esa actividad ya existe", "Error actividad", JOptionPane.ERROR_MESSAGE);
             
         } 
         
-        dispose();
+        dispose(); //Se cierra la ventana
         
     }//GEN-LAST:event_aceptarActividadActionPerformed
 
+    //Si se pulsa cancelar se cierra la ventana
     private void cancelarActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarActividadActionPerformed
         dispose();
     }//GEN-LAST:event_cancelarActividadActionPerformed

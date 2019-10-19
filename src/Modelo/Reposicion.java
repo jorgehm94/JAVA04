@@ -1,6 +1,10 @@
 
 package Modelo;
 
+/**
+ *
+ * @author Jorge Herrera - Sergio Ruiz
+ */
 import java.sql.Date;
 import java.util.GregorianCalendar;
 

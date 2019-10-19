@@ -12,18 +12,18 @@ import javax.swing.JOptionPane;
 
 public class VisualizarDirector extends javax.swing.JPanel {
     
-        GestionDirector con =new GestionDirector();
+        GestionDirector con =new GestionDirector(); //Se crea nuevo objeto de la clase GestionDirector
         
         
     public VisualizarDirector() {
         initComponents();
         try {
            
-            con.consulta("select * from DIRECTOR;");
+            con.consulta("select * from DIRECTOR;"); //Se llama al metodo de consulta pasandole la consulta
             
-            con.primero();
+            con.primero(); //Y nos colocamos en el principio
             
-            controlBotones();
+            controlBotones(); //Metodo para controlar botones
             
             // Los campos no se van a editar
             jTextField1.setEditable(false);
@@ -35,7 +35,7 @@ public class VisualizarDirector extends javax.swing.JPanel {
             jTextField3.setVisible(false);
             //
             
-            actualizarDatos();
+            actualizarDatos(); //Funcion de actualizar datos
              
         } catch (SQLException sQLException) {
             JOptionPane.showMessageDialog(null, "Ha fallado esa consulta", "Error", JOptionPane.ERROR_MESSAGE);
@@ -185,13 +185,14 @@ public class VisualizarDirector extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    //Boton que llama a un JDialog que nos muestra las acciones relacionadas con ese director
     private void botonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonProductosActionPerformed
         
-        Acciones objeto;
+        Acciones objeto; //Objeto del JDialog
         
           
             try {
-                objeto = new Acciones(Principal.devolverVentana(),true, Integer.parseInt(con.devolverColumna(1)));
+                objeto = new Acciones(Principal.devolverVentana(),true, Integer.parseInt(con.devolverColumna(1))); //Se sobre pone al JFrame y se le pasa el codigo de director
                 
                 objeto.setTitle("Actividades");
                 objeto.setVisible(true);
@@ -205,21 +206,22 @@ public class VisualizarDirector extends javax.swing.JPanel {
         
     }//GEN-LAST:event_botonProductosActionPerformed
 
+    //Metodo de boton adelante
     private void botonAdelanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAdelanteActionPerformed
 
         try {
-            con.avanzar();
+            con.avanzar(); //Avanzamos
             
-             botonCalcular.setEnabled(true);
+             botonCalcular.setEnabled(true); //Cuando se avanze se activa el boton "calcular"
         
         // oculto el campo de presupuesto
             jLabel4.setVisible(false);
             jTextField3.setVisible(false);
-          //
+         
           
-            controlBotones();
+            controlBotones(); //Metodo para controlar botones
             
-            actualizarDatos();
+            actualizarDatos(); //Metodo para actualizar datos
         } catch (SQLException sQLException) {
         }
     }//GEN-LAST:event_botonAdelanteActionPerformed
@@ -227,17 +229,17 @@ public class VisualizarDirector extends javax.swing.JPanel {
     private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
         try {
             
-             botonCalcular.setEnabled(true);
+             botonCalcular.setEnabled(true); //Se habilita el boton Calcular
         
         // oculto el campo de presupuesto
             jLabel4.setVisible(false);
             jTextField3.setVisible(false);
-          //
-            con.retroceder();
+          
+            con.retroceder(); //Se retrocede
             
-            controlBotones();
+            controlBotones(); //Metodo para controlar botones
             
-            actualizarDatos();
+            actualizarDatos(); //Metodo para actualizar datos
         } catch (SQLException sQLException) {
         }
     }//GEN-LAST:event_botonAtrasActionPerformed
@@ -249,44 +251,47 @@ public class VisualizarDirector extends javax.swing.JPanel {
         // Muestro el campo de presupuesto
             jLabel4.setVisible(true);
             jTextField3.setVisible(true);
-          //
           
-          GestionSupermercado bd = new GestionSupermercado();
+          GestionSupermercado bd = new GestionSupermercado(); //Objeto de la clase Gestion Supermercado
           ResultSet ganancias;
           ResultSet inversiones;
           float ganan=0, inver=0, resul=0;
           
             try {
-                String codigoDirector = con.devolverColumna(1);
+                String codigoDirector = con.devolverColumna(1); //Recdogemos el codigo de director
 
-                bd.consulta("select sum(GANANCIAS) FROM VENTA V, SUPERMERCADO S WHERE V.COD_VEN=S.COD_SUP AND DIR_SUP="+codigoDirector+";");
+                bd.consulta("select sum(GANANCIAS) FROM VENTA V, SUPERMERCADO S WHERE V.COD_VEN=S.COD_SUP AND DIR_SUP="+codigoDirector+";"); //Hacemos la consulta
                 
-               ganancias  = bd.devolverResultSet();
+               ganancias  = bd.devolverResultSet(); //Lo guardamos
                
-               bd.consulta("select sum(INVERSION) FROM REPOSICION R, SUPERMERCADO S WHERE R.COD_REP=S.COD_SUP AND DIR_SUP="+codigoDirector+";");
+               bd.consulta("select sum(INVERSION) FROM REPOSICION R, SUPERMERCADO S WHERE R.COD_REP=S.COD_SUP AND DIR_SUP="+codigoDirector+";"); //Hacemos la consulta
           
-               inversiones = bd.devolverResultSet();
+               inversiones = bd.devolverResultSet(); //Lo guardamos
+               
                ganancias.next();
                inversiones.next();
                
-               ganan = ganancias.getFloat(1);
+               //Se guardan tipo float
+               ganan = ganancias.getFloat(1); 
                inver = inversiones.getFloat(1);
                
             } catch (SQLException ex) {
                 Logger.getLogger(VisualizarDirector.class.getName()).log(Level.SEVERE, null, ex);
             }
           
-           resul = ganan-inver;
+           resul = ganan-inver; //Se calcula el resultado
            
-           jTextField3.setText(""+resul);
+           jTextField3.setText(""+resul); //Se muestra
           
           
     }//GEN-LAST:event_botonCalcularActionPerformed
 
+    
+   //Se llama a un JDialog para cambiar el nombre de los directores
     private void editarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarNombreActionPerformed
        
             try {
-                cambioNombre c1 = new cambioNombre(Principal.devolverVentana(), true, Integer.parseInt(con.devolverColumna(1)));
+                cambioNombre c1 = new cambioNombre(Principal.devolverVentana(), true, Integer.parseInt(con.devolverColumna(1))); //Se sobrepone al JFrame y se pasa el codigo de director
                 c1.setVisible(true);
                 
                 // Metodo para colocarme en el registro actualizado
@@ -299,9 +304,9 @@ public class VisualizarDirector extends javax.swing.JPanel {
                        break;
                }
 
-               controlBotones();
+               controlBotones(); //Control de los botones
                
-               actualizarDatos();
+               actualizarDatos(); //Actualizamos los datos
                
             } catch (SQLException ex) {
                 Logger.getLogger(VisualizarDirector.class.getName()).log(Level.SEVERE, null, ex);
@@ -309,7 +314,7 @@ public class VisualizarDirector extends javax.swing.JPanel {
 
     }//GEN-LAST:event_editarNombreActionPerformed
 
-    
+    //Metodo para controlar botones
     private void controlBotones()
     {
         try {
@@ -328,14 +333,15 @@ public class VisualizarDirector extends javax.swing.JPanel {
         }
     }
     
+    //Metodo para actualizar datos
     private void actualizarDatos()
     {
         try {
-            
+            //Se llama al metodo pasandole el indice de la columna para que nos devuelva la info
             jTextField1.setText("" + con.devolverColumna(1));
             jTextField2.setText("" + con.devolverColumna(2));
             
-            jLabel2.setIcon(new ImageIcon(getClass().getResource("/Imagenes/"+con.devolverColumna(1)+".jpg")));
+            jLabel2.setIcon(new ImageIcon(getClass().getResource("/Imagenes/"+con.devolverColumna(1)+".jpg"))); //La imagen se escoge segun el codigo de director
             
         } catch (SQLException sQLException) {
         }

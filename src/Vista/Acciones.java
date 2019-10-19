@@ -18,17 +18,17 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author alumno
+ * @author Jorge Herrera - Sergio Ruiz
  */
 public class Acciones extends javax.swing.JDialog {
 
     GestionSupermercado con = new GestionSupermercado();
     
-    ArrayList<Venta> lisVenta = new ArrayList();
+    ArrayList<Venta> lisVenta = new ArrayList(); //ArrayList de la tabla Venta
     
-    ArrayList<Reposicion> lisRepo = new ArrayList();
+    ArrayList<Reposicion> lisRepo = new ArrayList(); //ArrayList de la tabla Venta
     
-    DefaultTableModel modelo, modelo1;
+    DefaultTableModel modelo, modelo1; //Declaracion de los modelos
     
     private int directorActual;
     
@@ -37,39 +37,39 @@ public class Acciones extends javax.swing.JDialog {
         
         initComponents();
         
-        modelo = (DefaultTableModel) jTable1.getModel();
+        modelo = (DefaultTableModel) jTable1.getModel(); //modelo para el JTable1
         
-        modelo1 = (DefaultTableModel) jTable2.getModel();
+        modelo1 = (DefaultTableModel) jTable2.getModel(); //modelo para el JTable1
         
-        rellenarTablaVenta(codDir);
+        rellenarTablaVenta(codDir); //Metodo para rellenar tabla Venta
         
-        rellenarTablaRepo(codDir);
+        rellenarTablaRepo(codDir); //Metodo para rellenar tabla Reposicion
         
         directorActual = codDir;
         
-        jLabel1.setText("Actvidades del Director de codigo "+codDir);
+        jLabel1.setText("Actividades del Director de codigo "+codDir);
     }
     
-    
+    //Metodo para rellenar tabla Venta
     private void rellenarTablaVenta(int codigo) throws SQLException
     {
-        lisVenta = con.crearListaVenta(codigo);
+        lisVenta = con.crearListaVenta(codigo); //Llamamos al metodo de la clase Gestion Supermercado que nos devuelve una lista
         
-        Object vector[];
+        Object vector[]; //Creamos un vector de tipo objeto
         
         int i=0; 
-        while (i<lisVenta.size())
+        while (i<lisVenta.size()) //Mientras no se llegue al final
         {
-            vector = obtenerDatos(lisVenta.get(i));
-            modelo.addRow(vector);
-            i++;
+            vector = obtenerDatos(lisVenta.get(i)); //El vector se rellena
+            modelo.addRow(vector); //Se añade al modelo
+            i++; //Se suma al contador
         }
         
-        jTable1.setModel(modelo);
+        jTable1.setModel(modelo); //El modelo se le aplica al JTable
         
     }
     
-    
+    //Metodo para rellenar tabla Reposicion (Explicacion en el metodo anterior)
     private void rellenarTablaRepo(int codigo) throws SQLException
     {
         lisRepo = con.crearListaRepo(codigo);
@@ -88,16 +88,16 @@ public class Acciones extends javax.swing.JDialog {
         
     }
             
-    private Object[] obtenerDatos(Supermercado objeto)
+    private Object[] obtenerDatos(Supermercado objeto) //Objeto de tipo Supermercado
     {
-        Object vector[] = new Object[2];
+        Object vector[] = new Object[2]; //Creamos un vector del mismo numero de campos que la tabla
      
-        vector[0] = objeto.getCod_sup();
+        vector[0] = objeto.getCod_sup(); //La primera celda es el codigo de Supermercado
         
-        if (objeto instanceof Venta)
-            vector[1] = ( (Venta) objeto).getGanancias();
+        if (objeto instanceof Venta) //Se hace un casting 
+            vector[1] = ( (Venta) objeto).getGanancias(); //Se guardara las ganancias
         else
-            vector[1] = ( (Reposicion) objeto).getInversion();
+            vector[1] = ( (Reposicion) objeto).getInversion(); // O las inversiones
         return vector;
     }
     
@@ -211,26 +211,28 @@ public class Acciones extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //El boton atras hace que se cierre al ventana
     private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
         dispose();
     }//GEN-LAST:event_botonAtrasActionPerformed
 
+    //Si el usuario pulsa en el boton de añadir una nueva actividad, se crea un JDialog
     private void añadirActividadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirActividadActionPerformed
-        NuevaActividad p1 = new NuevaActividad(Principal.devolverVentana(), true, directorActual);
+        NuevaActividad p1 = new NuevaActividad(Principal.devolverVentana(), true, directorActual); // Se le pasa el codigo de Director
         p1.setTitle("Inserción de actividad");
         p1.setVisible(true);
 
-        modelo.setRowCount(0);
-        modelo1.setRowCount(0);
+        modelo.setRowCount(0); //Se resetean los modelos
+        modelo1.setRowCount(0); //Se resetena los modelos
         
         try {
-            rellenarTablaVenta(directorActual);
+            rellenarTablaVenta(directorActual); //Se rellena la tabla venta con el director que se le pasa como parametro 
         } catch (SQLException ex) {
             Logger.getLogger(Acciones.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
-            rellenarTablaRepo(directorActual);
+            rellenarTablaRepo(directorActual);//Se rellena la tabla venta con el director que se le pasa como parametro 
         } catch (SQLException ex) {
             Logger.getLogger(Acciones.class.getName()).log(Level.SEVERE, null, ex);
         }

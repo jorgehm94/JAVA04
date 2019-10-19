@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
     //paquete que permite configurar las funciones de red
 /**
  *
- * @author Jorge Herrera
+ * @author Jorge Herrera - Sergio Ruiz
  */
 public class Conexion {
 
@@ -21,6 +21,7 @@ public class Conexion {
         //con la BD se crea un objeto tipo con
     public static Connection con;
     
+    //Se crea dos Statement de las dos tablas
     public  Statement director;
     public  Statement supermercado;
     
@@ -52,7 +53,7 @@ public class Conexion {
                     //la conexion ABRIR CONEXION!!!
                     con = DriverManager.getConnection(url, "postgres", pass);
                     
-                    JOptionPane.showMessageDialog(null, "Conexion exitosa" ,"Ahora estas Doramio", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Conexion exitosa" ,"Estado de conexión", JOptionPane.PLAIN_MESSAGE);
                     
                     
                     return true;
@@ -70,8 +71,10 @@ public class Conexion {
             }
     }
 
-
     
+    //Se coloca el "TYPE_SCROLL_SENSITIVE" para poder ir para atrás y "CONCUR_UPDATABLE" para que se pueda modificar los datos de la base de datos
+
+    //Statement para la clase Director
     public  Statement crearSentenciaDirector() throws SQLException
     {
         director = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -79,7 +82,7 @@ public class Conexion {
         return director;
     }
     
-    
+    //Statement para la clase Supermercado
     public Statement crearSentenciaSupermercado() throws SQLException
     { 
         supermercado = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -87,6 +90,7 @@ public class Conexion {
         return supermercado;
     }
    
+    //Metodo para cerrar la conexion con la base de datos
     public static void cerrarConexion()
     {
         try

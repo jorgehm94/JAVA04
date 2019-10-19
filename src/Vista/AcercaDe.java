@@ -3,7 +3,7 @@ package Vista;
 
 /**
  *
- * @author Jorge Herrera
+ * @author Jorge Herrera - Sergio Ruiz
  */
 public class AcercaDe extends javax.swing.JDialog {
 
