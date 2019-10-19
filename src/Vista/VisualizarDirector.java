@@ -2,6 +2,7 @@
 package Vista;
 
 import Controlador.GestionDirector;
+import Controlador.GestionSupermercado;
 import Controlador.Principal;
 import java.sql.*; 
 import java.util.logging.Level;
@@ -22,11 +23,17 @@ public class VisualizarDirector extends javax.swing.JPanel {
             
             con.primero();
             
-            if(con.isFirst())
-                botonAtras.setEnabled(false);
+            controlBotones();
             
-            if(con.isLast())
-                botonAdelante.setEnabled(false);
+            // Los campos no se van a editar
+            jTextField1.setEditable(false);
+            jTextField2.setEditable(false);
+            jTextField3.setEditable(false);
+            
+            // Oculto el campo de presupuesto
+            jLabel4.setVisible(false);
+            jTextField3.setVisible(false);
+            //
             
             actualizarDatos();
              
@@ -50,6 +57,9 @@ public class VisualizarDirector extends javax.swing.JPanel {
         botonAtras = new javax.swing.JButton();
         botonAdelante = new javax.swing.JButton();
         botonCalcular = new javax.swing.JButton();
+        editarNombre = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
 
         botonProductos.setText("PRODUCTOS");
         botonProductos.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +93,23 @@ public class VisualizarDirector extends javax.swing.JPanel {
         });
 
         botonCalcular.setText("CALCULAR");
+        botonCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCalcularActionPerformed(evt);
+            }
+        });
+
+        editarNombre.setText("jButton2");
+        editarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarNombreActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("PRESUPUESTO");
+
+        jTextField3.setText("jTextField3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -92,50 +119,69 @@ public class VisualizarDirector extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botonProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jTextField2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 198, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(botonProductos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(editarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botonAtras)
+                                .addGap(117, 117, 117)
+                                .addComponent(botonCalcular)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(botonAdelante)))
+                        .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botonAtras)
-                        .addGap(84, 84, 84)
-                        .addComponent(botonCalcular)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addComponent(botonAdelante)))
-                .addGap(31, 31, 31))
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(botonProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editarNombre))))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botonAtras)
                             .addComponent(botonAdelante))
                         .addGap(32, 32, 32))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botonCalcular)
-                        .addGap(53, 53, 53))))
+                        .addGap(48, 48, 48))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -143,9 +189,11 @@ public class VisualizarDirector extends javax.swing.JPanel {
         
         Acciones objeto;
         
+          
             try {
                 objeto = new Acciones(Principal.devolverVentana(),true, Integer.parseInt(con.devolverColumna(1)));
                 
+                objeto.setTitle("Actividades");
                 objeto.setVisible(true);
                 objeto.pack();
                 
@@ -162,17 +210,14 @@ public class VisualizarDirector extends javax.swing.JPanel {
         try {
             con.avanzar();
             
-            if (con.isLast() == false) {
-                botonAdelante.setEnabled(true);
-            } else {
-                botonAdelante.setEnabled(false);
-            }
-            
-            if (con.isFirst()== false) {
-                botonAtras.setEnabled(true);
-            } else {
-                botonAtras.setEnabled(false);
-            }
+             botonCalcular.setEnabled(true);
+        
+        // oculto el campo de presupuesto
+            jLabel4.setVisible(false);
+            jTextField3.setVisible(false);
+          //
+          
+            controlBotones();
             
             actualizarDatos();
         } catch (SQLException sQLException) {
@@ -181,26 +226,108 @@ public class VisualizarDirector extends javax.swing.JPanel {
 
     private void botonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtrasActionPerformed
         try {
+            
+             botonCalcular.setEnabled(true);
+        
+        // oculto el campo de presupuesto
+            jLabel4.setVisible(false);
+            jTextField3.setVisible(false);
+          //
             con.retroceder();
             
-            if (con.isLast() == false) {
-                botonAdelante.setEnabled(true);
-            } else {
-                botonAdelante.setEnabled(false);
-            }
-            
-            if (con.isFirst()== false) {
-                botonAtras.setEnabled(true);
-            } else {
-                botonAtras.setEnabled(false);
-            }
+            controlBotones();
             
             actualizarDatos();
         } catch (SQLException sQLException) {
         }
     }//GEN-LAST:event_botonAtrasActionPerformed
 
+    private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
+        
+            botonCalcular.setEnabled(false);
+        
+        // Muestro el campo de presupuesto
+            jLabel4.setVisible(true);
+            jTextField3.setVisible(true);
+          //
+          
+          GestionSupermercado bd = new GestionSupermercado();
+          ResultSet ganancias;
+          ResultSet inversiones;
+          float ganan=0, inver=0, resul=0;
+          
+            try {
+                String codigoDirector = con.devolverColumna(1);
 
+                bd.consulta("select sum(GANANCIAS) FROM VENTA V, SUPERMERCADO S WHERE V.COD_VEN=S.COD_SUP AND DIR_SUP="+codigoDirector+";");
+                
+               ganancias  = bd.devolverResultSet();
+               
+               bd.consulta("select sum(INVERSION) FROM REPOSICION R, SUPERMERCADO S WHERE R.COD_REP=S.COD_SUP AND DIR_SUP="+codigoDirector+";");
+          
+               inversiones = bd.devolverResultSet();
+               ganancias.next();
+               inversiones.next();
+               
+               ganan = ganancias.getFloat(1);
+               inver = inversiones.getFloat(1);
+               
+            } catch (SQLException ex) {
+                Logger.getLogger(VisualizarDirector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          
+           resul = ganan-inver;
+           
+           jTextField3.setText(""+resul);
+          
+          
+    }//GEN-LAST:event_botonCalcularActionPerformed
+
+    private void editarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarNombreActionPerformed
+       
+            try {
+                cambioNombre c1 = new cambioNombre(Principal.devolverVentana(), true, Integer.parseInt(con.devolverColumna(1)));
+                c1.setVisible(true);
+                
+                // Metodo para colocarme en el registro actualizado
+               String cod = con.devolverColumna(1);
+               con.consulta("select * from DIRECTOR;");
+               while(con.isLast()==false)
+               {
+                   con.avanzar();
+                   if(con.devolverColumna(1).equals(cod))
+                       break;
+               }
+
+               controlBotones();
+               
+               actualizarDatos();
+               
+            } catch (SQLException ex) {
+                Logger.getLogger(VisualizarDirector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+    }//GEN-LAST:event_editarNombreActionPerformed
+
+    
+    private void controlBotones()
+    {
+        try {
+            if (con.isLast() == false) {
+                botonAdelante.setEnabled(true);
+            } else {
+                botonAdelante.setEnabled(false);
+            }
+            
+            if (con.isFirst() == false) {
+                botonAtras.setEnabled(true);
+            } else {
+                botonAtras.setEnabled(false);
+            }
+        } catch (SQLException sQLException) {
+        }
+    }
+    
     private void actualizarDatos()
     {
         try {
@@ -223,10 +350,13 @@ public class VisualizarDirector extends javax.swing.JPanel {
     private javax.swing.JButton botonAtras;
     private javax.swing.JButton botonCalcular;
     private javax.swing.JButton botonProductos;
+    private javax.swing.JButton editarNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

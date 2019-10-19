@@ -54,9 +54,7 @@ public class GestionSupermercado {
         
             
         return listaVenta; 
-        
-       
-        
+         
     }
     
     public ArrayList crearListaRepo (int codDirector) throws SQLException
@@ -79,5 +77,10 @@ public class GestionSupermercado {
         return listaRepo;
     }
     
+    
+    public ResultSet devolverResultSet()
+    {
+        return actividades;
+    }
 
 }

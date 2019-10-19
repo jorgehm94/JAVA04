@@ -23,6 +23,13 @@ public class GestionDirector {
         datos = con.crearSentenciaDirector().executeQuery(consulta);
     }
     
+    public void modificar(String consulta) throws SQLException
+    {
+        Conexion con = new Conexion();
+          
+        con.crearSentenciaDirector().execute(consulta);
+    }
+    
     public void avanzar() throws SQLException
     {
         datos.next();
